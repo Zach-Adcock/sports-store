@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  h1 #{title} #{brand.name}
+
+  if products.length
+
+    p #[strong Delete all of this brand's products to delete the brand.]
+
+    div(style='margin-left:20px;margin-top:20px')
+
+      h4 #{brand.name} Products
+
+      dl
+      each product in products
+        dt
+          a(href=product.url) #{product.name}
+
+  else
+    p Are you sure you want to delete this brand?
+
+    form(method='POST' action='')
+      div.form-group
+        input#brandID.form-control(type='hidden',name='brandID', required='true', value=brand._id )
+
+      button.btn.btn-primary(type='submit') Yes, Delete

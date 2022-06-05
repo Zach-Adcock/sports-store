@@ -1,0 +1,19 @@
+extends layout
+
+block content
+
+  main(class="h-4/5 md:h-3/5 flex justify-center")
+    div(class="w-full flex justify-center items-center mt-6")
+      div(class="max-h-4/5 w-7/12")
+        img(class="")(src=product.image)
+      div(class="w-5/12")
+        h1 #{product.name}
+        #{product.price}
+        p Brand: 
+          a.text-blue-600.underline(href=product.brand.url) #{product.brand.name}
+        p Description: #{product.description}
+
+
+        hr
+        p
+          a(href=product.url+'/delete') Delete Product.

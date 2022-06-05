@@ -1,0 +1,22 @@
+extends layout
+
+block content
+
+  h1 Brand: #{brand.name}
+  p #{brand.description}
+
+  div()
+
+    h4 Products
+
+    dl
+      each product in brand_products
+        a(href=product.url) #{product.name}
+        #{product.price}
+        #{product.description}
+
+      else
+        p This Brand has no products currently.
+    hr
+    p
+      a(href=brand.url+'/delete') Delete brand.

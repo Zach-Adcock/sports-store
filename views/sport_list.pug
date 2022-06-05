@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1= title
+
+  ul
+    each sport in sport_list
+      li
+        a(href=sport.url) #{sport.name}
+
+    else
+      li There are no items currently linked to a specific sport.

@@ -1,0 +1,57 @@
+extends layout 
+
+block content 
+  h1=title 
+  form(method='post' action='' enctype="multipart/form-data")
+    div.form-group
+      label(for='name') Product Name:
+      //-value will be set if form input has errors
+      input#name.form-control(type='text' placeholder='Product name' name='name' required='true' value=(product===undefined ? '' : product.name) )
+    div.form-group
+      label(for='brand') Brand: 
+      select#brand.form-control(type='select' name='brand' value=(product===undefined ? '' : product.brand) )
+       - brands.sort(function(a, b) {let textA = a.name.toUpperCase(); let textB = b.name.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+        for brand in brands
+          if product
+            - console.log('product: ', product)
+            //- Handles object (get form for product.brand) and string (post form, where it is a string.
+            - console.log('brand_id: ', brand._id)
+            option(value=brand._id
+              selected=(brand._id.toString()==product.brand._id
+                || brand._id.toString()==product.brand
+              ) ? 'selected' : false
+            ) #{brand.name}
+          else
+            option(value=brand._id) #{brand.name}
+      label(for='sport') Sport: 
+      select#sport.form-control(type='select' name='sport' value=(product===undefined ? '' : product.sport) )
+       - sports.sort(function(a, b) {let textA = a.name.toUpperCase(); let textB = b.name.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+        for sport in sports
+          if product
+            //- Handle GET form, where book.author is an object, and POST form, where it is a string.
+            option(value=sport._id
+              selected=(sport._id.toString()==product.sport._id
+                || sport._id.toString()==product.sport
+              ) ? 'selected' : false
+            ) #{sport.name}
+          else
+            option(value=sport._id) #{sport.name}
+    div.form-group
+      label(for='description') Description:
+      input#description.form-control(type='text' name='description' value=(product===undefined ? '' : product.description) )
+    div.form-group
+      label(for='price') Price: 
+      input#price.form-control(type='number' name='price' value=(product===undefined ? '' : product.price) )
+      label(for='stock') Stock: 
+      input#stock.form-control(type='number' name='stock' value=(product===undefined ? '' : product.stock) )
+      div.form-group
+      label(for='product_code') 8 Digit Product Code - Optional: 
+      input#product_code.form-control(type='number' name='product_code' value=(product===undefined ? '' : product.product_code) )
+    div.form-group
+      label.form-label(for='image') Image:
+      input#image.form-control(type='file', name='image' required='true' value=(product===undefined ? '' : product.image) )
+    button.btn.btn-primary(type='submit') Submit 
+  if errors
+    ul
+      for error in errors
+        li!= error.msg

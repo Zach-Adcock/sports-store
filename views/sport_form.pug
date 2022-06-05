@@ -1,0 +1,13 @@
+extends layout 
+
+block content 
+  h1=title 
+  form(method='POST' action='')
+    div.form-group
+      label(for='name') Sport Name:
+      input#name.form-control(type='text' placeholder='Sport name' name='name' required='true')
+    button.btn.btn-primary(type='submit') Submit 
+  if errors
+    ul
+      for error in errors
+        li!= error.msg

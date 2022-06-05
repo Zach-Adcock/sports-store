@@ -1,0 +1,22 @@
+extends layout
+
+block content
+
+  h1 Sport: #{sport.name}
+
+  div()
+
+    h4 Products
+
+    dl
+      each product in sport_products
+        a(href=product.url) #{product.name}
+        #{product.price}
+        p Brand: #{product.brand.name}
+        p Description: #{product.description}
+
+      else
+        p This Sport has no products currently.
+    hr
+    p
+      a(href=sport.url+'/delete') Delete Sport.

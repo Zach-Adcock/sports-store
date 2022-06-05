@@ -1,0 +1,31 @@
+{
+  "name": "sports-store",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "devstart": "nodemon ./bin/www",
+    "tailwind:css": "postcss public/styles/tailwind.css -o public/styles/style.css"
+  },
+  "dependencies": {
+    "async": "^3.2.3",
+    "autoprefixer": "^10.4.7",
+    "aws-sdk": "^2.1147.0",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "dotenv": "^16.0.1",
+    "express": "~4.16.1",
+    "express-validator": "^6.14.1",
+    "fs": "^0.0.1-security",
+    "http-errors": "~1.6.3",
+    "mongoose": "^6.3.5",
+    "morgan": "~1.9.1",
+    "multer": "^1.4.4",
+    "nodemon": "^2.0.16",
+    "postcss": "^8.4.14",
+    "postcss-cli": "^9.1.0",
+    "postcss-import": "^14.1.0",
+    "pug": "^2.0.0-beta11",
+    "tailwindcss": "^3.0.24"
+  }
+}

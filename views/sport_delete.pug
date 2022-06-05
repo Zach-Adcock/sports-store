@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  h1 #{title}: #{sport.name}
+
+  if products.length
+
+    p #[strong Delete all of this sport's products to delete the sport.]
+
+    div(style='margin-left:20px;margin-top:20px')
+
+      h4 Products
+
+      dl
+      each product in products
+        dt
+          a(href=product.url) #{product.name}
+
+  else
+    p Are you sure you want to delete this sport?
+
+    form(method='POST' action='')
+      div.form-group
+        input#sportID.form-control(type='hidden',name='sportID', required='true', value=sport._id )
+
+      button.btn.btn-primary(type='submit') Yes, Delete
