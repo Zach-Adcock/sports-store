@@ -1,22 +1,27 @@
 extends layout
 
 block content
+  main(class="h-5/6 w-full md:h-3/5 flex flex-col items-center mt-4")
+    div(class="md:max-h-52 md:h-1/6 w-7/12 md:w-auto flex justify-center m-auto")
+          img(class="md:max-h-44 w-auto drop-shadow", src=sport.image)
+    h1(class="text-4xl font-bold mt-4") #{sport.name}
 
-  h1 Sport: #{sport.name}
+    h4(class="text-2xl font-bold mt-4") #{sport.name} Products
 
-  div()
+    if (sport_products.length)
+          div(class="w-full md:w-3/5 md:h-96 flex flex-col items-center")
+            each product in sport_products
+              ul(class="flex justify-center md:h-60")
+                div(class="w-full flex justify-center items-center mt-6")
+                  a(class="max-h-4/5 md:max-h-full w-7/12 md:w-auto flex justify-center", href=product.url)
+                    img(class="h-auto w-5/6 drop-shadow", src=product.image)
+                  div(class="w-5/12 flex flex-col items-center")
+                    a(class="text-2xl text-center", href=product.url) #{product.name}
+                    div $!{product.price}
+    else
+      p This sport has no products currently.
+            
 
-    h4 Products
+    a(class="bg-sky-500 h-12 w-5/6 md:w-1/6 mt-8 md:mt-2 mx-auto flex items-center justify-center", href=sport.url+'/delete')
+      div(class="m-auto") Delete Sport
 
-    dl
-      each product in sport_products
-        a(href=product.url) #{product.name}
-        #{product.price}
-        p Brand: #{product.brand.name}
-        p Description: #{product.description}
-
-      else
-        p This Sport has no products currently.
-    hr
-    p
-      a(href=sport.url+'/delete') Delete Sport.

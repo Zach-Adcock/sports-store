@@ -3,6 +3,14 @@ const Sport = require('../models/sport');
 const Brand = require('../models/brand');
 var async = require('async');
 const { body, validationResult } = require('express-validator');
+const fs = require('fs');
+const util = require('util');
+const unlinkFile = util.promisify(fs.unlink);
+
+//Upload image to S3
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
+const { uploadFile, deleteFile } = require("../s3");
 
 
 //Get all Brands
@@ -25,7 +33,7 @@ exports.brand_page = async (req, res, next) => {
         Brand.findById(req.params.id).exec(callback)
       },
       brand_products: function(callback) {
-        Product.find({ 'brand': req.params.id }, 'name description price').exec(callback)
+        Product.find({ 'brand': req.params.id }, 'name description price image').exec(callback)
       },
     }, function(err, results) {
       if (err) { return next(err); } // Error in API usage.
@@ -46,14 +54,23 @@ exports.create_brand_get = async (req, res, next) => {
 
 //POST request - create new brand
 exports.create_brand_post = [
+  //upload image to Multer
+  upload.single('image'),
+
   //Middleware to validate and sanitize fields
   body('name', 'Name must not be empty').trim().isLength({ min: 1}).escape(),
   body('description', 'Description must not be empty').trim().isLength({ min: 1}).escape(),
   body('date_created').trim().optional({ checkFalsy: true }).escape(),
 
   //Use validated/sanitized data
-  (req, res, next) => {
+  async (req, res, next) => {
     const errors = validationResult(req);
+
+    //image upload to S3
+    const result = await uploadFile(req.file)
+    //Remove locally stored image
+    await unlinkFile(req.file.path)
+
 
     // if there are errors, rerender the form
     if (!errors.isEmpty()) {
@@ -65,7 +82,8 @@ exports.create_brand_post = [
       const brand = new Brand(
         { name: req.body.name,
           description: req.body.description,
-          date_created: req.body.date_created
+          date_created: req.body.date_created,
+          image: result.Location,
         });
       
       // Check if brand already exists. Redirect to it if it exists.

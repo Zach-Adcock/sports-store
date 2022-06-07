@@ -2,7 +2,7 @@ extends layout
 
 block content 
   h1=title 
-  form(method='POST' action='')
+  form(method='POST' action='' enctype="multipart/form-data")
     div.form-group
       label(for='name') Brand Name:
       //-value will be set if form input has errors
@@ -12,6 +12,9 @@ block content
       input#description.form-control(type='text' name='description' value=(undefined===brand ? '' : brand.description) )
       label(for='date_created') Date Company Created:
       input#date_created.form-control(type='text' name='date_created' value=(undefined===brand ? '' : brand.date_created) )
+    div.form-group
+      label.form-label(for='image') Image:
+      input#image.form-control(type='file', name='image' required='true' value=(undefined===brand ? '' : brand.image) )
     button.btn.btn-primary(type='submit') Submit 
   if errors
     ul

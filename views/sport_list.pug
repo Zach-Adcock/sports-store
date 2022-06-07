@@ -7,6 +7,9 @@ block content
     each sport in sport_list
       li
         a(href=sport.url) #{sport.name}
+        div(class="img-div max-h-4/5 w-7/12 flex justify-center")
+          img(class="h-auto w-5/6 drop-shadow")(src=sport.image)
+
 
     else
       li There are no items currently linked to a specific sport.

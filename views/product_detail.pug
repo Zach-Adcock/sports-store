@@ -2,18 +2,15 @@ extends layout
 
 block content
 
-  main(class="h-4/5 md:h-3/5 flex justify-center")
-    div(class="w-full flex justify-center items-center mt-6")
-      div(class="max-h-4/5 w-7/12")
-        img(class="")(src=product.image)
-      div(class="w-5/12")
-        h1 #{product.name}
-        #{product.price}
+  main(class="h-5/6 md:h-3/5 flex justify-center")
+    div(class="container-div w-full md:w-3/5 flex justify-center items-center mt-6")
+      div(class="img-div max-h-4/5 w-7/12 flex justify-center")
+        img(class="h-auto w-5/6 drop-shadow", src=product.image)
+      div(class="product-info w-5/12 flex flex-col items-center")
+        h1(class="text-2xl text-center") #{product.name}
+        div $!{product.price}
         p Brand: 
           a.text-blue-600.underline(href=product.brand.url) #{product.brand.name}
-        p Description: #{product.description}
 
-
-        hr
-        p
-          a(href=product.url+'/delete') Delete Product.
+        a(class="bg-sky-500 h-12 w-5/6 mt-4 mx-auto flex items-center justify-center", href=product.url+'/delete')
+          div(class="m-auto") Delete Product

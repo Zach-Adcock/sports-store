@@ -10,7 +10,7 @@
   "dependencies": {
     "async": "^3.2.3",
     "autoprefixer": "^10.4.7",
-    "aws-sdk": "^2.1147.0",
+    "aws-sdk": "^2.1148.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^16.0.1",

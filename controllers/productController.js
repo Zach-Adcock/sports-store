@@ -59,6 +59,7 @@ exports.create_product_get = async (req, res, next) => {
 
 //POST request - create new product
 exports.create_product_post = [
+  //upload image to Multer
   upload.single('image'),
 
   //Middleware to validate and sanitize fields
@@ -75,20 +76,10 @@ exports.create_product_post = [
     const errors = validationResult(req);
 
     //image upload to S3
-    const result = await uploadFile(req.file)
-    await unlinkFile(req.file.path)
-    console.log('result: ', result)
+    const result = await uploadFile(req.file);
+    //Remove locally stored image
+    await unlinkFile(req.file.path);
 
-    const product = new Product(
-      { name: req.body.name,
-        description: req.body.description,
-        product_code: req.body.product_code,
-        price: req.body.price,
-        stock: req.body.stock,
-        brand: req.body.brand,
-        sport: req.body.sport,
-        image: result.Location,
-      });
 
     // if there are errors, rerender the form
     if (!errors.isEmpty()) {
@@ -121,7 +112,16 @@ exports.create_product_post = [
     } else {
       //No error, send product to DB
       //create product obj
-      
+      const product = new Product(
+        { name: req.body.name,
+          description: req.body.description,
+          product_code: req.body.product_code,
+          price: req.body.price,
+          stock: req.body.stock,
+          brand: req.body.brand,
+          sport: req.body.sport,
+          image: result.Location,
+        });
       
       // Check if product already exists in DB. Redirect to it if it exists. Same product from new brand is ok.
       Product.findOne({ 'name': req.body.name, 'brand': req.body.brand })
@@ -175,7 +175,7 @@ exports.product_delete_post = async (req, res, next) => {
       //Product exists, now delete product
       Product.findByIdAndRemove(req.body.productID, (err) => {
         if (err) { return next(err) }
-        res.redirect(`/shop/brand/${results.product.brand}`)
+        res.redirect(`/shop/brands/${results.product.brand}`)
       })
     }
   )

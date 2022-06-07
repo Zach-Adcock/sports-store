@@ -16,7 +16,7 @@ const ProductSchema = new Schema({
 //Virtual for Product's URL
 ProductSchema.virtual('url').get(
   function () {
-    return `/shop/product/${this._id}`
+    return `/shop/products/${this._id}`
   }
 );
 

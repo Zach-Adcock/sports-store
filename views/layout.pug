@@ -8,14 +8,14 @@ html
 
   body
 
-    nav(class='w-full h-16 bg-slate-700 flex justify-center')
-      div(class='w-full md:w-1/2')
-        ul(class='nav-ul list-none')
+    nav(class='w-full h-16 bg-slate-500 flex items-center justify-center')
+      div(class='w-full md:w-1/2 h-3/5 flex justify-center items-center')
+        ul(class='nav-ul list-none divide-x text-cyan-400 font-bold text-xl md:text-2xl lg:text-4xl')
           li
-            a Brands
+            a(href='/shop/brands') Brands
           li
-            a Products
+            a(href='/shop/products') Products
           li
-            a Sports
+            a(href='/shop/sports') Sports
 
     block content

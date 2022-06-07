@@ -2,6 +2,14 @@ const Product = require('../models/product');
 const Sport = require('../models/sport');
 var async = require('async');
 const { body,validationResult } = require('express-validator');
+const fs = require('fs');
+const util = require('util');
+const unlinkFile = util.promisify(fs.unlink);
+
+//Upload image to S3
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
+const { uploadFile, deleteFile } = require("../s3");
 
 exports.sport_list = async (req, res) => {
   try {
@@ -20,7 +28,7 @@ exports.sport_page = async (req, res, next) => {
         Sport.findById(req.params.id).exec(callback)
       },
       sport_products: function(callback) {
-        Product.find({ 'sport': req.params.id }, 'name description price brand').populate('brand').exec(callback)
+        Product.find({ 'sport': req.params.id }, 'name description price brand image').populate('brand').exec(callback)
       },
     }, function(err, results) {
       if (err) { return next(err); } // Error in API usage.
@@ -43,29 +51,41 @@ exports.create_sport_get = async (req, res, next) => {
 
 //POST form when creating new sport
 exports.create_sport_post = [
+  //upload image to Multer
+  upload.single('image'),
+
   //sanitize input
   body('name', 'Name must not be empty').trim().isLength({ min: 1, max: 30 }).escape(),
 
   //Use validated/sanitized data
-  (req, res, next) => {
+  async (req, res, next) => {
     const errors = validationResult(req);
 
-    const sport = new Sport(
-      { name: req.body.name }
-    );
-
+    //Use s3.js to upload image to AWS bucket
+    const result = await uploadFile(req.file);
+    //Remove locally stored image
+    await unlinkFile(req.file.path)
+    
     // if there are errors, rerender the form
     if (!errors.isEmpty()) {
       res.render('sport_form', { title: 'Add a new sport', errors: errors.array()});
       return;
-    }
+    } else {
+      console.log('name: ', req.body.name)
+      console.log('image link: ', result.Location)
 
-    //Check DB to see if sport already exists
-    Sport.findOne({ 'name': req.body.name }).exec( (err, sport_search) => {
+      const sport = new Sport({ 
+          name: req.body.name,
+          image: result.Location,
+      });
+
+      //Check DB to see if sport already exists
+      Sport.findOne({ 'name': req.body.name }).exec( (err, sport_search) => {
       //Redirect to sport page if it exists
       if (sport_search) {
         res.redirect(sport_search.url)
       } else {
+        console.log('saving sport cuz it is new')
         //Add sport to DB if it doesn't exist
         sport.save( (err) => {
           if (err) { return next(err); }
@@ -73,6 +93,7 @@ exports.create_sport_post = [
         })
       }
     })
+    }  
   }
 ];
 
