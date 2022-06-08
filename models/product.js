@@ -11,6 +11,7 @@ const ProductSchema = new Schema({
   price: {type: Number, required: true},
   stock: {type: Number, required: true},
   image: {type: String, required: true},
+  adminLock: { type: Boolean, required: true, default: false}
 });
 
 //Virtual for Product's URL

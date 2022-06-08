@@ -2,6 +2,7 @@ const Product = require('../models/product');
 const Sport = require('../models/sport');
 var async = require('async');
 const { body,validationResult } = require('express-validator');
+
 const fs = require('fs');
 const util = require('util');
 const unlinkFile = util.promisify(fs.unlink);
@@ -28,7 +29,7 @@ exports.sport_page = async (req, res, next) => {
         Sport.findById(req.params.id).exec(callback)
       },
       sport_products: function(callback) {
-        Product.find({ 'sport': req.params.id }, 'name description price brand image').populate('brand').exec(callback)
+        Product.find({ 'sport': req.params.id }, 'name description price brand image adminLock').populate('brand').exec(callback)
       },
     }, function(err, results) {
       if (err) { return next(err); } // Error in API usage.
@@ -65,18 +66,18 @@ exports.create_sport_post = [
     const result = await uploadFile(req.file);
     //Remove locally stored image
     await unlinkFile(req.file.path)
-    
     // if there are errors, rerender the form
     if (!errors.isEmpty()) {
       res.render('sport_form', { title: 'Add a new sport', errors: errors.array()});
       return;
     } else {
-      console.log('name: ', req.body.name)
-      console.log('image link: ', result.Location)
-
+      console.log('req.body.lock: ', req.body.lock)
+      const locked = (req.body.lock === 'on' ? true : false) 
+      console.log('locked: ', locked)
       const sport = new Sport({ 
           name: req.body.name,
           image: result.Location,
+          adminLock: locked
       });
 
       //Check DB to see if sport already exists
@@ -114,6 +115,7 @@ exports.sport_delete_get = async (req, res, next) => {
         res.redirect('/shop/sports')
       };
       //If sport exists and no errors, render delete page for sport
+      console.log('sport: ', results.sport)
       res.render('sport_delete', {title: 'Delete sport: ', sport: results.sport, products: results.sport_products})
     }
 
@@ -135,6 +137,10 @@ exports.sport_delete_post = async (req, res, next) => {
       if (results.sport_products.length > 0) {
         //There are products for this sport. Re-render sport's delete page.
         res.render('sport_delete', {title: 'Delete sport: ', sport: results.sport, products: results.sport_products})
+      } else if (results.sport.adminLock) {
+        //This sport is a default Admin created sport. Cannot delete
+        // req.flash('info', 'Sorry, this sport was created by thine majesty. Deletion is impossible')
+        res.render('sport_page', {title: 'Sport Detail', sport: results.sport, sport_products: results.sport_products, fail_message: `Can't delete this sport.`})
       } else {
         Sport.findByIdAndRemove(req.body.sportID, (err) => {
           if (err) { return next(err); }

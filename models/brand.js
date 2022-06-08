@@ -9,6 +9,7 @@ const BrandSchema = new Schema(
     description: { type: String, required: true},
     year_created: { type: String, required: false},
     image: {type: String, required: true},
+    adminLock: { type: Boolean, required: true, default: false}
   }
 )
 
