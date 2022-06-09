@@ -172,11 +172,15 @@ exports.product_delete_post = async (req, res, next) => {
     }, (err, results) => {
       if (err) { return next(err) }
       
-      //Product exists, now delete product
-      Product.findByIdAndRemove(req.body.productID, (err) => {
+      if (results.product.adminLock) {
+        //This product is a default Admin created product. Cannot delete
+        res.render('product_detail', { title: 'Product Details', product: results.product, fail_message: `Can't delete this product. (Admin protected)`})
+      } else {
+        //Product exists, now delete product
+        Product.findByIdAndRemove(req.body.productID, (err) => {
         if (err) { return next(err) }
         res.redirect(`/shop/brands/${results.product.brand}`)
       })
     }
-  )
+})
 }

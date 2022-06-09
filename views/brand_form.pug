@@ -1,22 +1,23 @@
 extends layout 
 
 block content 
-  h1=title 
-  form(method='POST' action='' enctype="multipart/form-data")
-    div.form-group
-      label(for='name') Brand Name:
-      //-value will be set if form input has errors
-      input#name.form-control(type='text' placeholder='Brand name' name='name' required='true' value=(undefined===brand ? '' : brand.name) )
-    div.form-group
-      label(for='description') Description:
-      input#description.form-control(type='text' name='description' value=(undefined===brand ? '' : brand.description) )
-      label(for='date_created') Date Company Created:
-      input#date_created.form-control(type='text' name='date_created' value=(undefined===brand ? '' : brand.date_created) )
-    div.form-group
-      label.form-label(for='image') Image:
-      input#image.form-control(type='file', name='image' required='true' value=(undefined===brand ? '' : brand.image) )
-    button.btn.btn-primary(type='submit') Submit 
-  if errors
-    ul
-      for error in errors
-        li!= error.msg
+  main(class="h-5/6 w-full md:h-3/5 flex flex-col items-center mt-14")
+    h1=title 
+    form(method='POST' action='' enctype="multipart/form-data")
+      div.form-group
+        label(for='name') Brand Name:
+        //-value will be set if form input has errors
+        input#name.form-control(type='text' placeholder='Brand name' name='name' required='true' value=(undefined===brand ? '' : brand.name) )
+      div.form-group
+        label(for='description') Description:
+        input#description.form-control(type='text' name='description' value=(undefined===brand ? '' : brand.description) )
+        label(for='date_created') Date Company Created:
+        input#date_created.form-control(type='text' name='date_created' value=(undefined===brand ? '' : brand.date_created) )
+      div.form-group
+        label.form-label(for='image') Image:
+        input#image.form-control(type='file', name='image' required='true' value=(undefined===brand ? '' : brand.image) )
+      button.btn.btn-primary(type='submit') Submit 
+    if errors
+      ul
+        for error in errors
+          li!= error.msg

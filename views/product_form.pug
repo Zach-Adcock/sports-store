@@ -13,9 +13,7 @@ block content
        - brands.sort(function(a, b) {let textA = a.name.toUpperCase(); let textB = b.name.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
         for brand in brands
           if product
-            - console.log('product: ', product)
             //- Handles object (get form for product.brand) and string (post form, where it is a string.
-            - console.log('brand_id: ', brand._id)
             option(value=brand._id
               selected=(brand._id.toString()==product.brand._id
                 || brand._id.toString()==product.brand

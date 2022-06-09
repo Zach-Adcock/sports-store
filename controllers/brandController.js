@@ -138,15 +138,19 @@ exports.brand_delete_post = async (req, res, next) => {
       }
     }, (err, results) => {
       if (err) { return next(err) }
+      console.log('results.brand.adminLock: ', results.brand.adminLock)
       //If brand has products, direct to brand page. Don't delete brand.
       if (results.brand_products.length > 0) {
         res.render('brand_delete', { title:'Delete brand: ', brand: results.brand, products: results.brand_products })
-      }
+      } else if (results.brand.adminLock) {
+        res.render('brand_page', { title: 'Brand Detail', brand: results.brand, brand_products: results.brand_products, fail_message: `Can't delete this product. (Admin protected)`} );
+      } else {
       //Otherwise delete brand
       Brand.findByIdAndRemove(req.body.brandID, (err) => {
         if (err) { return next(err) }
         res.redirect('/shop/brands')
       })
+     }
     }
   )
 }

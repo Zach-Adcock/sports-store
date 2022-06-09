@@ -1,17 +1,17 @@
 extends layout
 
 block content
-  main(class="h-5/6 w-full md:h-3/5 flex flex-col items-center mt-4")
-    div(class="md:max-h-52 md:h-1/6 w-7/12 md:w-auto flex justify-center m-auto")
+  main(class="h-5/6 w-full md:h-[80rem] flex flex-col items-center my-14")
+    div(class="md:max-h-52 md:h-1/6 w-7/12 md:w-auto flex justify-center mx-auto")
           img(class="md:max-h-44 w-auto drop-shadow", src=sport.image)
     h1(class="text-4xl font-bold mt-4") #{sport.name}
 
-    h4(class="text-2xl font-bold mt-4") #{sport.name} Products
+    h4(class="text-2xl font-bold mt-12") #{sport.name} Products
 
     if (sport_products.length)
-          div(class="w-full md:w-3/5 md:h-96 flex flex-col items-center")
+          div(class="w-full md:w-3/5 md:h-96 flex flex-col items-center mt-6")
             each product in sport_products
-              ul(class="flex justify-center md:h-60")
+              ul(class="flex justify-center md:h-60 my-4")
                 div(class="w-full flex justify-center items-center mt-6")
                   a(class="max-h-4/5 md:max-h-full w-7/12 md:w-auto flex justify-center", href=product.url)
                     img(class="h-auto w-5/6 drop-shadow", src=product.image)
@@ -21,9 +21,18 @@ block content
     else
       p This sport has no products currently.
             
-
-    a(class="bg-sky-500 h-12 w-5/6 md:w-1/6 mt-8 md:mt-2 mx-auto flex items-center justify-center", href=sport.url+'/delete')
+    if (fail_message)
+      div(class="bg-sky-500 h-20 md:h-16 w-5/6 mt-12 mx-auto flex items-center justify-center text-center")
+        div(class="m-auto text-rose-700") 
+          p #{fail_message}
+    else 
+      a(class="bg-sky-500 h-12 w-5/6 md:w-1/6 mt-12 mx-auto flex items-center justify-center text-center", href=sport.url+'/delete')
         div(class="m-auto") Delete Sport
-        if (fail_message)
-        div(class="m-auto text-rose-700") #{fail_message}
+
+
+    //- a(class="bg-sky-500 h-12 w-5/6 md:w-1/6 mt-8 mx-auto flex items-center justify-center text-center", href=sport.url+'/delete')
+    //-     div(class="m-auto") Delete Sport
+    //-     if (fail_message)
+    //-       div(class="m-auto text-rose-700") 
+    //-         p #{fail_message}
 

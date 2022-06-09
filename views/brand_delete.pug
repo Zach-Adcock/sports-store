@@ -1,26 +1,59 @@
 extends layout
 
 block content
-  h1 #{title} #{brand.name}
+  main(class="h-5/6 flex flex-col justify-center items-center mt-14")
+    div(class="md:max-h-52 md:h-1/6 w-7/12 md:w-auto flex justify-center mx-auto")
+          img(class="md:max-h-44 w-auto drop-shadow", src=brand.image)
+    h1(class="text-4xl font-bold mt-4") #{brand.name}
 
-  if products.length
+    if (products.length)
+      h4 #[strong Delete all of this brand's products to delete the brand.]
+      div(style='margin-left:20px;margin-top:20px')
+        ul(class="md:w-11/12 md:h-[40rem] flex flex-col justify-center md:flex-row md:flex-wrap md:content-start mb-8 overflow-x-hidden")
+          each product in products
+              div(class="max-w-full md:w-1/4 max-h-36 md:max-h-72 md:h-60 flex justify-center items-center shadow-xl md:border-4 rounded-lg border-cyan-400 my-4 mx-6")
+                a(class="max-h-inherit w-7/12 flex justify-center p-3", href=product.url)
+                  img(class="h-auto w-5/6 rounded-md", src=product.image)
+                div(class="w-5/12 flex flex-col items-center p-1")
+                  a(class="text-2xl text-center", href=product.url) #{product.name}
+                  div $!{product.price}
+    
+    else 
+      div(class="md:w-1/3 mt-6 text-center")
+        p Are you sure you want to delete this brand?
 
-    p #[strong Delete all of this brand's products to delete the brand.]
+      div(class="w-1/2 md:w-1/4")
+        form(method='POST' action='')
+          div.form-group
+            input#brandID.form-control(type='hidden',name='brandID', required='true', value=brand._id )
 
-    div(style='margin-left:20px;margin-top:20px')
+          button.btn.btn-primary(type='submit', class="bg-sky-500 w-5/6 h-10 flex justify-center items-center mt-4 m-auto text-center") Yes, Delete
 
-      h4 #{brand.name} Products
 
-      dl
-      each product in products
-        dt
-          a(href=product.url) #{product.name}
 
-  else
-    p Are you sure you want to delete this brand?
+//- extends layout
 
-    form(method='POST' action='')
-      div.form-group
-        input#brandID.form-control(type='hidden',name='brandID', required='true', value=brand._id )
+//- block content
+//-   h1 #{title} #{brand.name}
 
-      button.btn.btn-primary(type='submit') Yes, Delete
+//-   if products.length
+
+//-     p #[strong Delete all of this brand's products to delete the brand.]
+
+//-     div(style='margin-left:20px;margin-top:20px')
+
+//-       h4 #{brand.name} Products
+
+//-       dl
+//-       each product in products
+//-         dt
+//-           a(href=product.url) #{product.name}
+
+//-   else
+//-     p Are you sure you want to delete this brand?
+
+//-     form(method='POST' action='')
+//-       div.form-group
+//-         input#brandID.form-control(type='hidden',name='brandID', required='true', value=brand._id )
+
+//-       button.btn.btn-primary(type='submit') Yes, Delete

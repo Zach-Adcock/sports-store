@@ -1,12 +1,23 @@
 extends layout
 
 block content
-  h1 #{title} #{product.name}
+  main(class="h-5/6 md:h-3/5 flex flex-col justify-center items-center")
+    div(class="md:w-1/3 mt-6 text-center")
+      p Are you sure you want to delete this product?
 
-  p Are you sure you want to delete this product?
+    div(class="w-1/2 md:w-1/4")
+      form(method='POST' action='')
+        div.form-group
+          input#productID.form-control(type='hidden',name='productID', required='true', value=product._id )
 
-  form(method='POST' action='')
-    div.form-group
-      input#productID.form-control(type='hidden',name='productID', required='true', value=product._id )
+        button.btn.btn-primary(type='submit', class="bg-sky-500 w-5/6 h-10 flex justify-center items-center mt-4 m-auto text-center") Yes, Delete
 
-    button.btn.btn-primary(type='submit') Yes, Delete
+  
+    div(class="container-div w-full md:w-3/5 flex justify-center items-center mt-9 md:mt-14")
+      div(class="img-div max-h-4/5 w-7/12 flex justify-center")
+        img(class="h-auto w-5/6 drop-shadow", src=product.image)
+      div(class="product-info w-5/12 flex flex-col items-center")
+        h1(class="text-2xl text-center") #{product.name}
+        div $!{product.price}
+        p Brand: 
+          a.text-blue-600.underline(href=product.brand.url) #{product.brand.name}

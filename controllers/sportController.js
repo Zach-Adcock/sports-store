@@ -71,9 +71,7 @@ exports.create_sport_post = [
       res.render('sport_form', { title: 'Add a new sport', errors: errors.array()});
       return;
     } else {
-      console.log('req.body.lock: ', req.body.lock)
       const locked = (req.body.lock === 'on' ? true : false) 
-      console.log('locked: ', locked)
       const sport = new Sport({ 
           name: req.body.name,
           image: result.Location,
@@ -86,7 +84,6 @@ exports.create_sport_post = [
       if (sport_search) {
         res.redirect(sport_search.url)
       } else {
-        console.log('saving sport cuz it is new')
         //Add sport to DB if it doesn't exist
         sport.save( (err) => {
           if (err) { return next(err); }
@@ -100,7 +97,6 @@ exports.create_sport_post = [
 
 
 exports.sport_delete_get = async (req, res, next) => {
-  console.log('req.params.id: ', req.params.id)
   async.parallel(
     {
       sport: function(callback) {
@@ -115,7 +111,6 @@ exports.sport_delete_get = async (req, res, next) => {
         res.redirect('/shop/sports')
       };
       //If sport exists and no errors, render delete page for sport
-      console.log('sport: ', results.sport)
       res.render('sport_delete', {title: 'Delete sport: ', sport: results.sport, products: results.sport_products})
     }
 
@@ -139,8 +134,7 @@ exports.sport_delete_post = async (req, res, next) => {
         res.render('sport_delete', {title: 'Delete sport: ', sport: results.sport, products: results.sport_products})
       } else if (results.sport.adminLock) {
         //This sport is a default Admin created sport. Cannot delete
-        // req.flash('info', 'Sorry, this sport was created by thine majesty. Deletion is impossible')
-        res.render('sport_page', {title: 'Sport Detail', sport: results.sport, sport_products: results.sport_products, fail_message: `Can't delete this sport.`})
+        res.render('sport_page', {title: 'Sport Detail', sport: results.sport, sport_products: results.sport_products, fail_message: `Can't delete this sport. (Admin protected)`})
       } else {
         Sport.findByIdAndRemove(req.body.sportID, (err) => {
           if (err) { return next(err); }
