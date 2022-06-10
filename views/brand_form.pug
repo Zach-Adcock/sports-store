@@ -1,23 +1,54 @@
 extends layout 
 
 block content 
-  main(class="h-5/6 w-full md:h-3/5 flex flex-col items-center mt-14")
-    h1=title 
-    form(method='POST' action='' enctype="multipart/form-data")
-      div.form-group
-        label(for='name') Brand Name:
-        //-value will be set if form input has errors
-        input#name.form-control(type='text' placeholder='Brand name' name='name' required='true' value=(undefined===brand ? '' : brand.name) )
-      div.form-group
-        label(for='description') Description:
-        input#description.form-control(type='text' name='description' value=(undefined===brand ? '' : brand.description) )
-        label(for='date_created') Date Company Created:
-        input#date_created.form-control(type='text' name='date_created' value=(undefined===brand ? '' : brand.date_created) )
-      div.form-group
-        label.form-label(for='image') Image:
-        input#image.form-control(type='file', name='image' required='true' value=(undefined===brand ? '' : brand.image) )
-      button.btn.btn-primary(type='submit') Submit 
+
+  //- Form values will be set on (re)render if form input has errors
+
+  main(class="min-h-screen mt-14 flex flex-col items-center px-4 overflow-x-hidden")
+    h1(class="font-extrabold text-3xl md:text-5xl")=title 
+
+    div(class="w-5/6 sm:w-full sm:mx-auto sm:max-w-lg mt-14")
+      div(class="bg-slate-500 p-6 shadow-xl rounded-lg md:px-10")
+        form(class="space-y-5" method='POST' action='' enctype="multipart/form-data")
+          div(class= "")
+            label(for='name' class="font-bold text-white") Brand Name:
+            div(class= "mt-2")
+              input(type='text' placeholder='Brand name' id='name' name='name' required='true' value=(undefined===brand ? '' : brand.name) class="")
+          div(class= "")
+            label(for='description' class="font-bold text-white") Description:
+            div(class= "mt-2")
+              input(type='text' placeholder='This brand specializes in...' id='description' name='description' required='true' value=(undefined===brand ? '' : brand.description) class="")
+          div(class= "")
+            label(for='date_created' class="font-bold text-white") Year Company Created:
+            div(class= "mt-2")
+              input(type='text' placeholder='1999' id='date_created' name='date_created' required='true' value=(undefined===brand ? '' : brand.date_created) class="")
+          div(class= "")
+            label(for='image' class="font-bold text-white") Logo:
+            div(class= "mt-2")
+              input(type='file' placeholder='Attach image' id='image' name='image' required='true' value=(undefined===brand ? '' : brand.image) class="")
+          div(class="flex justify-center")
+            button(type="submit" class="w-1/2 flex justify-center border border-transparent rounded-md shadow-md \
+            text-white bg-cyan-400 hover:bg-cyan-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-400") Submit
+
     if errors
       ul
         for error in errors
           li!= error.msg
+
+
+
+    //-       div(class= "")
+    //-         label(for='description' class="uppercase") Description:
+    //-         input#description.form-control(type='text' name='description' value=(undefined===brand ? '' : brand.description) )
+    //-       div(class= "")
+    //-         label(for='date_created' class="uppercase") Year Company Created:
+    //-           input#date_created.form-control(type='text' name='date_created' value=(undefined===brand ? '' : brand.date_created) )
+    //-       div(class= "")
+    //-         label.form-label(for='image' class="uppercase") Image:
+    //-         input#image.form-control(type='file', name='image' required='true' value=(undefined===brand ? '' : brand.image) )
+    //-       button.btn.btn-primary(type='submit') Submit 
+    //- if errors
+    //-   ul
+    //-     for error in errors
+    //-       li!= error.msg
+

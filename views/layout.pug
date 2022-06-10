@@ -5,17 +5,32 @@ html
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     link(rel='stylesheet', type='text/css' href='/styles/style.css')
     link(rel='stylesheet', type='text/css' href='/styles/customStyles.css')
+    link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css")
 
   body
 
     nav(class='w-full h-16 bg-slate-500 flex items-center justify-center')
       div(class='w-full md:w-1/2 h-3/5 flex justify-center items-center')
-        ul(class='nav-ul list-none divide-x text-cyan-400 font-bold text-xl md:text-2xl lg:text-4xl')
-          li
-            a(href='/shop/brands') Brands
-          li
-            a(href='/shop/products') Products
-          li
-            a(href='/shop/sports') Sports
+        ul(class='nav-ul list-none divide-x-2 text-cyan-400 font-bold text-lg md:text-xl lg:text-2xl')
+          li(class="navbar-li overflow-hidden")
+            button(class="m-0 p-1 hover:bg-white") Brands 
+              i.fa.fa-caret-down
+            div(class="hidden absolute")
+              a(href='/shop/brands') All Brands
+              a(href='/shop/brands/create') Add New Brand
+
+          li(class="navbar-li overflow-hidden")
+            button(class="m-0 p-1 hover:bg-white") Products 
+              i.fa.fa-caret-down
+            div(class="hidden absolute")
+              a(href='/shop/products') All Products
+              a(href='/shop/products/create') Add New Product
+
+          li(class="navbar-li overflow-hidden")
+            button(class="m-0 p-1 hover:bg-white") Sports 
+              i.fa.fa-caret-down
+            div(class="hidden absolute")
+              a(href='/shop/sports') All Sports
+              a(href='/shop/sports/create') Add New Sport
 
     block content
