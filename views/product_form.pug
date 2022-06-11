@@ -1,55 +1,77 @@
 extends layout 
 
 block content 
-  h1=title 
-  form(method='post' action='' enctype="multipart/form-data")
-    div.form-group
-      label(for='name') Product Name:
-      //-value will be set if form input has errors
-      input#name.form-control(type='text' placeholder='Product name' name='name' required='true' value=(product===undefined ? '' : product.name) )
-    div.form-group
-      label(for='brand') Brand: 
-      select#brand.form-control(type='select' name='brand' value=(product===undefined ? '' : product.brand) )
-       - brands.sort(function(a, b) {let textA = a.name.toUpperCase(); let textB = b.name.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
-        for brand in brands
-          if product
-            //- Handles object (get form for product.brand) and string (post form, where it is a string.
-            option(value=brand._id
-              selected=(brand._id.toString()==product.brand._id
-                || brand._id.toString()==product.brand
-              ) ? 'selected' : false
-            ) #{brand.name}
-          else
-            option(value=brand._id) #{brand.name}
-      label(for='sport') Sport: 
-      select#sport.form-control(type='select' name='sport' value=(product===undefined ? '' : product.sport) )
-       - sports.sort(function(a, b) {let textA = a.name.toUpperCase(); let textB = b.name.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
-        for sport in sports
-          if product
-            //- Handle GET form, where book.author is an object, and POST form, where it is a string.
-            option(value=sport._id
-              selected=(sport._id.toString()==product.sport._id
-                || sport._id.toString()==product.sport
-              ) ? 'selected' : false
-            ) #{sport.name}
-          else
-            option(value=sport._id) #{sport.name}
-    div.form-group
-      label(for='description') Description:
-      input#description.form-control(type='text' name='description' value=(product===undefined ? '' : product.description) )
-    div.form-group
-      label(for='price') Price: 
-      input#price.form-control(type='number' name='price' value=(product===undefined ? '' : product.price) )
-      label(for='stock') Stock: 
-      input#stock.form-control(type='number' name='stock' value=(product===undefined ? '' : product.stock) )
-      div.form-group
-      label(for='product_code') 8 Digit Product Code - Optional: 
-      input#product_code.form-control(type='number' name='product_code' value=(product===undefined ? '' : product.product_code) )
-    div.form-group
-      label.form-label(for='image') Image:
-      input#image.form-control(type='file', name='image' required='true' value=(product===undefined ? '' : product.image) )
-    button.btn.btn-primary(type='submit') Submit 
-  if errors
-    ul
-      for error in errors
-        li!= error.msg
+  main(class="min-h-screen mt-14 flex flex-col items-center px-4 overflow-x-hidden")
+    h1(class="font-extrabold text-3xl md:text-5xl")=title 
+
+    div(class="w-5/6 sm:w-full sm:mx-auto sm:max-w-lg mt-14")
+      div(class="bg-slate-500 p-6 shadow-xl rounded-lg md:px-10")
+        form(class="space-y-5" method='POST' action='' enctype="multipart/form-data")
+          div(class= "")
+            label(for='name' class="font-bold text-white") Product Name:
+            div(class= "mt-2")
+              input(type='text' placeholder='Product name' name='name' required='true' value=(product===undefined ? '' : product.name) )
+          div(class= "")
+            label(for='brand' class="font-bold text-white") Brand:
+            div(class= "mt-2")
+              select(type='select' name='brand' value=(product===undefined ? '' : product.brand))
+                - brands.sort(function(a, b) {let textA = a.name.toUpperCase(); let textB = b.name.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+                  for brand in brands
+                    if product
+                      //- Handles object (get form for product.brand) and POST form for product.sport as string..
+                      option(value=brand._id
+                      selected=(brand._id.toString()==product.brand._id
+                          || brand._id.toString()==product.brand
+                        ) ? 'selected' : false
+                      ) #{brand.name}
+                    else
+                      option(value=brand._id) #{brand.name}
+          div(class= "")
+            label(for='sport' class="form-control font-bold text-white") Sport:
+            div(class= "mt-2")
+              select(type='select' name='sport' value=(product===undefined ? '' : product.sport) )
+                - sports.sort(function(a, b) {let textA = a.name.toUpperCase(); let textB = b.name.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+                  for sport in sports
+                    if product
+                      //- Handles GET form, when product.sport is an object, and POST form for product.sport as string.
+                      option(value=sport._id
+                        selected=(sport._id.toString()==product.sport._id
+                          || sport._id.toString()==product.sport
+                        ) ? 'selected' : false
+                      ) #{sport.name}
+                    else
+                      option(value=sport._id) #{sport.name}
+          div(class= "")
+            label(for='price' class="font-bold text-white") Price:
+            div(class= "mt-2")
+              input(type='number' name='price' value=(product===undefined ? '' : product.price) )
+          div(class= "")
+            label(for='stock' class="font-bold text-white") Stock:
+            div(class= "mt-2")
+              input(type='number' name='stock' value=(product===undefined ? '' : product.stock) )
+          div(class= "")
+            label(for='image' class="font-bold text-white") Product Image:
+            div(class= "mt-2")
+              input(type='file', name='image' required='true' value=(product===undefined ? '' : product.image) )
+          div(class="flex justify-center")
+            button(type="submit" class="w-1/2 flex justify-center border border-transparent rounded-md shadow-md \
+            text-white bg-cyan-400 hover:bg-cyan-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-400") Submit
+    if errors
+      ul
+        for error in errors
+          li!= error.msg
+
+
+
+    //- div(class= "")
+    //-   label(for='description' class="font-bold text-white") Description:
+    //-   div(class= "mt-2")
+    //-     input(type='text' name='description' value=(product===undefined ? '' : product.description) )
+    //- div(class= "")
+    //-   label(for='product_code' class="font-bold text-white") 8 Digit Product Code - Optional::
+    //-   div(class= "mt-2")
+    //-     input(type='number' name='product_code' value=(product===undefined ? '' : product.product_code) )
+
+
+
+ 

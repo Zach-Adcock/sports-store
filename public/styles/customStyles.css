@@ -39,7 +39,7 @@
 
 .nav-item-drop {
     position: absolute;
-    top: 33px;
+    top: 40px;
     left: -10px;
     box-shadow: 0 0 10px gray;
     background-color: white;
@@ -62,7 +62,12 @@
 
 .nav-item-drop > li {
     list-style: none;
+}
+.nav-item-drop > li > a{
+    width: 100%;
+    height: 100%;
     padding: 4px;
+    display: block;
 }
 
 .nav-item-drop > li:hover, .nav-item-drop > li:focus {
@@ -103,3 +108,9 @@ html {
 }
 
 
+
+
+.sports-image {
+    max-height: 90%;
+    height: 90%;
+}

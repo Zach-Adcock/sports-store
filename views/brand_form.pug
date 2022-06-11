@@ -34,21 +34,3 @@ block content
       ul
         for error in errors
           li!= error.msg
-
-
-
-    //-       div(class= "")
-    //-         label(for='description' class="uppercase") Description:
-    //-         input#description.form-control(type='text' name='description' value=(undefined===brand ? '' : brand.description) )
-    //-       div(class= "")
-    //-         label(for='date_created' class="uppercase") Year Company Created:
-    //-           input#date_created.form-control(type='text' name='date_created' value=(undefined===brand ? '' : brand.date_created) )
-    //-       div(class= "")
-    //-         label.form-label(for='image' class="uppercase") Image:
-    //-         input#image.form-control(type='file', name='image' required='true' value=(undefined===brand ? '' : brand.image) )
-    //-       button.btn.btn-primary(type='submit') Submit 
-    //- if errors
-    //-   ul
-    //-     for error in errors
-    //-       li!= error.msg
-
