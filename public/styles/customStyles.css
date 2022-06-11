@@ -3,30 +3,94 @@
     height: 90vh;
 }
 
-.nav-ul > li {
-    display: inline-block;
-    padding:  0 .5em;
+.body-class {
+    position: relative;
+    z-index: 0;
 }
 
-.navbar-li > a {
-    float: left;
-    text-align: center;
-    padding: 10px;
-    text-decoration: none;
+.nav {
+    position: sticky;
+    top: 0;
+    width: 100vw;
+    box-shadow: 0 0 10px #22d3ee;
+    z-index: 10;
 }
 
-.navbar-li:hover .dropdown{
-    display: block;
+.nav-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin: 0 2rem;
+}
+
+.nav-list-logo {
+    list-style: none;
+    margin-right: auto;
+}
+
+.nav-list-item {
+    list-style: none;
+    font-weight: bold;
+    position: relative;
+    padding: 4px;
+    cursor: pointer;
+}
+
+.nav-item-drop {
+    position: absolute;
+    top: 33px;
+    left: -10px;
+    box-shadow: 0 0 10px gray;
     background-color: white;
+    width: 165px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    opacity: 0;
+    visibility: hidden;
 }
 
-.dropdown > a {
-    display: block;
+/* on mobile, prevent right-most drop down from going off screen right. */
+@media only screen and (max-width: 500px) {
+    .nav-item-drop-right{
+        width: 125px;
+        padding: 4px;
+    }
+  }
+
+.nav-item-drop > li {
+    list-style: none;
+    padding: 4px;
 }
 
-.dropdown > a:hover{
-    background-color: white;
+.nav-item-drop > li:hover, .nav-item-drop > li:focus {
+    background-color: #22d3ee;
 }
+
+.nav-list-item:hover .nav-item-drop, .nav-list-item:focus .nav-item-drop {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Set and animate underline bar (on hover) */
+.nav-list-item::after {
+    content: '';
+    width: 0%;
+    height: 3px;
+    left: 5px;
+    bottom: 6px;
+    position: absolute;
+    border-radius: 20px;
+    background-color: #22d3ee;
+    transition: width 1s;
+}
+
+.nav-list-item:hover::after {
+    width: 70%
+}
+
 
 html, body {
     max-width: 100%;
