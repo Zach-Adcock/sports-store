@@ -3,11 +3,18 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-var flash = require('connect-flash');
 require('dotenv').config()
 
+//Authentication
+const session = require("express-session")
+const passport = require("passport")
+const LocalStrategy = require("passport-local").Strategy;
+const flash = require('connect-flash');
+var bcrypt = require('bcryptjs');
+
+//Routes
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const userRouter = require('./routes/user');
 const shopRouter = require('./routes/shop');
 
 const app = express();
@@ -19,6 +26,7 @@ const mongoDB = process.env.MONGO_DB_URL;
 mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
+require('./authentication/passport')
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,14 +36,23 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({ secret: process.env.SESSION_PASS, resave: false, saveUninitialized: true }));
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//Takes place of 'alert'
-app.use(flash());
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use( (req, res, next)  => {
+  res.locals.login = req.isAuthenticated();
+  console.log(res.locals.login)
+  next();
+});
+
+app.use('/user', userRouter);
 app.use('/shop', shopRouter);
+app.use('/', shopRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

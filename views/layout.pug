@@ -34,5 +34,15 @@ html
             a(href='/shop/sports') View All Sports 
           li 
             a(href='/shop/sports/create') Create a Sport
+    div(class="logged-in")
+      if (login) 
+        a(href="/user/logout") Log Out 
+      else
+        a(href="/user/sign-in") Sign In 
+        a(href="/user/sign-up") Sign Up 
+
+
+
+
 
   block content

@@ -66,19 +66,31 @@ exports.create_product_post = [
   body('name', 'Name must not be empty').trim().isLength({ min: 1}).escape(),
   body('description').trim().optional({ checkFalsy: true }).escape(),
   body('product_code').trim().optional({ checkFalsy: true }).isLength({ min:8, max:8 }).escape(),
-  body('price', 'Price must be a positive whole number').trim().isLength({ min: 1, max: 7}).isFloat({min: 1, max: 9999}).escape(),
+  body('price', 'Price must be a positive whole number (less than 100,000)').trim().isLength({ min: 1, max: 7}).isFloat({min: 1, max: 100000}).escape(),
   body('stock').trim().isLength({ min: 1, max: 3}).withMessage('Must be at least 1 item, but no more than 999').isFloat().withMessage('Must be at least a number').escape(),
   body('brand', 'Brand must not be empty').trim().isLength({ min: 1}).escape(),
   body('sport', 'Sport must not be empty').trim().isLength({ min: 1}).escape(),
 
   //Use validated/sanitized data
   async (req, res, next) => {
+    console.log('request: ', req.body)
     const errors = validationResult(req);
-
     //image upload to S3
     const result = await uploadFile(req.file);
     //Remove locally stored image
     await unlinkFile(req.file.path);
+
+    //create product obj
+    const product = new Product(
+      { name: req.body.name,
+        description: req.body.description,
+        product_code: req.body.product_code,
+        price: req.body.price,
+        stock: req.body.stock,
+        brand: req.body.brand,
+        sport: req.body.sport,
+        image: result.Location,
+      });
 
 
     // if there are errors, rerender the form
@@ -111,17 +123,6 @@ exports.create_product_post = [
       return;
     } else {
       //No error, send product to DB
-      //create product obj
-      const product = new Product(
-        { name: req.body.name,
-          description: req.body.description,
-          product_code: req.body.product_code,
-          price: req.body.price,
-          stock: req.body.stock,
-          brand: req.body.brand,
-          sport: req.body.sport,
-          image: result.Location,
-        });
       
       // Check if product already exists in DB. Redirect to it if it exists. Same product from new brand is ok.
       Product.findOne({ 'name': req.body.name, 'brand': req.body.brand })
@@ -156,7 +157,6 @@ exports.product_delete_get = async (req, res, next) => {
         res.redirect('/shop/brands')
       }
       //Product found. Render page to delete product
-      console.log('results.product.brand: ', results.product.brand)
       res.render('product_delete', { title:'Delete product: ', product: results.product })
     }
   )

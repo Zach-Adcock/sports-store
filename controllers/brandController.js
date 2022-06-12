@@ -138,7 +138,6 @@ exports.brand_delete_post = async (req, res, next) => {
       }
     }, (err, results) => {
       if (err) { return next(err) }
-      console.log('results.brand.adminLock: ', results.brand.adminLock)
       //If brand has products, direct to brand page. Don't delete brand.
       if (results.brand_products.length > 0) {
         res.render('brand_delete', { title:'Delete brand: ', brand: results.brand, products: results.brand_products })

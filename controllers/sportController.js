@@ -3,14 +3,16 @@ const Sport = require('../models/sport');
 var async = require('async');
 const { body,validationResult } = require('express-validator');
 
-const fs = require('fs');
-const util = require('util');
-const unlinkFile = util.promisify(fs.unlink);
 
 //Upload image to S3
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 const { uploadFile, deleteFile } = require("../s3");
+
+//Delete local copy of image after upload to s3 bucket
+const fs = require('fs');
+const util = require('util');
+const unlinkFile = util.promisify(fs.unlink);
 
 exports.sport_list = async (req, res) => {
   try {

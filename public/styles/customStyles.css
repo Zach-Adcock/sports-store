@@ -1,4 +1,6 @@
-
+.error {
+    color: red;
+}
 .product-detail-main {
     height: 90vh;
 }
