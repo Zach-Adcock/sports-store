@@ -8,41 +8,56 @@ html
     //- link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css")
     
     script(src="https://kit.fontawesome.com/57e2e24c82.js" crossorigin="anonymous")
-
   body
    
   nav(class="nav h-20 text-lg sm:text-lg md:text-2xl flex justify-center items-center z-10 bg-slate-500")
-    ul(class="nav-list my-auto")
-      li(class="nav-list-item") Brands 
-        i.fa.fa-caret-down
-        ul(class="nav-item-drop")
-          li 
-            a(href='/shop/brands') View All Brands 
-          li 
-            a(href='/shop/brands/create') Create a Brand
-      li(class="nav-list-item") Products 
-        i.fa.fa-caret-down
-        ul(class="nav-item-drop")
-          li 
-            a(href='/shop/products') View All Products 
-          li 
-            a(href='/shop/products/create') Create a Product
-      li(class="nav-list-item nav-list-drop-right") Sports 
-        i.fa.fa-caret-down
-        ul(class="nav-item-drop nav-item-drop-right") 
-          li 
-            a(href='/shop/sports') View All Sports 
-          li 
-            a(href='/shop/sports/create') Create a Sport
-    div(class="logged-in")
-      if (login) 
-        a(href="/user/logout") Log Out 
+    div(class="nav-center")
+      ul(class="nav-list my-auto")
+        li(class="nav-list-item") Brands 
+          i.fa.fa-caret-down
+          ul(class="nav-item-drop")
+            li 
+              a(href='/shop/brands') View All Brands 
+            li 
+              a(href='/shop/brands/create') Create a Brand
+        li(class="nav-list-item") Products 
+          i.fa.fa-caret-down
+          ul(class="nav-item-drop")
+            li 
+              a(href='/shop/products') View All Products 
+            li 
+              a(href='/shop/products/create') Create a Product
+        li(class="nav-list-item") Sports 
+          i.fa.fa-caret-down
+          ul(class="nav-item-drop") 
+            li 
+              a(href='/shop/sports') View All Sports 
+            li 
+              a(href='/shop/sports/create') Create a Sport   
+    div(class="nav-right flex items-center")
+      div(class="flex items-center gap-x-1")
+        i.fa.fa-cart-shopping 
+        |  Cart
+        if (session.cart)
+          span(class="bg-cyan-400 text-sm font-medium mr-2 px-2.5 py-0.5 ml-1 rounded")= session.cart.itemCount
+          //- span(class="bg-cyan-400 text-sm font-medium mr-2 px-2.5 py-0.5 ml-1 rounded")=  session.cart ? session.cart.itemCount : 0
+
+      if (login)
+        ul(class="nav-list my-auto")
+          li(class="nav-list-item nav-list-drop-right") Account   
+            i(class="ml-10").fa.fa-caret-down
+            ul(class="nav-item-drop nav-item-drop-right")
+              li 
+                a(href="/user/logout") Log Out
+            
       else
-        a(href="/user/sign-in") Sign In 
-        a(href="/user/sign-up") Sign Up 
-
-
-
-
-
+        ul(class="nav-list my-auto")
+          li(class="nav-list-item nav-list-drop-right") Account 
+            i(class="").fa.fa-caret-down
+            ul(class="nav-item-drop nav-item-drop-right")
+              li 
+                a(href="/user/sign-in") Sign In
+              li 
+                a(href="/user/sign-up") Sign Up
+          
   block content

@@ -2,7 +2,7 @@ extends layout
 
 block content
 
-  main(class="h-full w-full md:h-3/5 mt-4 flex flex-col items-center")
+  main(class="min-h-screen w-full md:h-3/5 mt-4 flex flex-col items-center overflow-y-visible")
     h4(class="text-2xl font-bold mt-4")= title
     if (product_list.length)
         ul(class="md:w-11/12 md:h-[40rem] flex flex-col justify-center md:flex-row md:flex-wrap md:content-start mb-8 overflow-x-hidden")

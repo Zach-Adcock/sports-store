@@ -11,7 +11,8 @@ block content
         div $!{product.price}
         p Brand: 
           a.text-blue-600.underline(href=product.brand.url) #{product.brand.name}
-
+        a(class="bg-green-600 h-12 w-5/6 mt-4 mx-auto flex items-center justify-center text-center", href="/addToCart/"+product._id)
+            div(class="m-auto") Add to Cart
         if (fail_message)
           div(class="bg-sky-500 h-20 md:h-16 w-5/6 mt-4 mx-auto flex items-center justify-center text-center")
             div(class="m-auto text-rose-700") 

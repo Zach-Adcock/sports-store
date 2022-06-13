@@ -4,9 +4,10 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 require('dotenv').config()
+const session = require("express-session")
+const MongoStore = require("connect-mongo");
 
 //Authentication
-const session = require("express-session")
 const passport = require("passport")
 const LocalStrategy = require("passport-local").Strategy;
 const flash = require('connect-flash');
@@ -36,7 +37,15 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(session({ secret: process.env.SESSION_PASS, resave: false, saveUninitialized: true }));
+
+app.use(session(
+  { secret: process.env.SESSION_PASS,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: mongoDB}),
+    cookie: { maxAge: 120 * 60 * 1000 }
+}));
+
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
@@ -45,13 +54,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use( (req, res, next)  => {
   res.locals.login = req.isAuthenticated();
-  console.log(res.locals.login)
+  res.locals.session = req.session;
   next();
 });
 
 app.use('/user', userRouter);
 app.use('/shop', shopRouter);
-app.use('/', shopRouter);
+app.use('/', indexRouter);
 
 
 // catch 404 and forward to error handler

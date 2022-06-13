@@ -17,6 +17,13 @@
     box-shadow: 0 0 10px #22d3ee;
     z-index: 10;
 }
+.nav-center {
+    position: relative;
+}
+.nav-right {
+    position: absolute;
+    right: 0;
+}
 
 .nav-list {
     display: flex;
@@ -45,7 +52,7 @@
     left: -10px;
     box-shadow: 0 0 10px gray;
     background-color: white;
-    width: 165px;
+    width: 120px;
     padding: 8px;
     display: flex;
     flex-direction: column;
