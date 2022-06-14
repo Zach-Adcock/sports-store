@@ -6,9 +6,9 @@ const Product = require('../models/product');
 const Cart = require('../models/cart');
 
 /* Redirect to /shop homepage. */
-// router.get('/', function(req, res, next) {
-//   res.redirect('/shop');
-// });
+router.get('/', function(req, res, next) {
+  res.redirect('/shop');
+});
 
 router.get('/addToCart/:id', (req, res, next) => {
   const productId = req.params.id;
