@@ -73,7 +73,6 @@ exports.create_product_post = [
 
   //Use validated/sanitized data
   async (req, res, next) => {
-    console.log('request: ', req.body)
     const errors = validationResult(req);
     //image upload to S3
     const result = await uploadFile(req.file);

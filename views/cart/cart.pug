@@ -1,0 +1,32 @@
+extends ../layout 
+
+block content
+
+  main(class="min-h-screen w-full md:h-3/5 mt-4 flex flex-col items-center")
+    if (products)
+        h4(class="text-2xl font-bold mt-4") Shopping Cart
+        div(class="")= products.item
+        ul(class="md:w-11/12 md:h-[40rem] flex flex-col justify-center mb-8")
+            each product in products
+                li(class="md:cart-item max-h-36 md:max-h-72 md:h-60 flex justify-center items-center shadow-xl md:border-4 rounded-lg border-cyan-400 my-4 mx-4")
+                    div(class="flex items-center md:mx-8")
+                        a(class="max-h-inherit w-1/2 h-auto md:w-3/4 flex justify-center p-3", href=product.url)
+                            img(class="h-auto w-5/6 max-h-full rounded-md", src=product.item.image)
+                        div(class="")
+                            div(class="text-sm md:text-xl break-words text-center") #{product.item.name}
+                                span : $
+                                span #{product.item.price}
+                            div(class="text-sm md:text-xl break-words text-center") Quantity: #{product.qty}
+                    //- ul(class="dropdown text-sm") 
+                    //-     li
+                    //-         a(class="") Add 1 to cart
+                    //-     li
+                    //-         a(class="") Remove 1 from cart
+                    //-     li
+                    //-         a(class="") Remove all
+        div(class="")
+            div(class="checkout") Total Price: #{totalPrice} 
+    else
+        div(class="")
+            div(class="") No items in cart. 
+        

@@ -475,8 +475,8 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-right: 0.5rem;
 }.ml-1 {
   margin-left: 0.25rem;
-}.ml-10 {
-  margin-left: 2.5rem;
+}.ml-4 {
+  margin-left: 1rem;
 }.mt-9 {
   margin-top: 2.25rem;
 }.mt-16 {
@@ -646,7 +646,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-ring-color: rgb(34 211 238 / var(--tw-ring-opacity));
 }.focus\:ring-offset-2:focus {
   --tw-ring-offset-width: 2px;
-}@media (min-width: 640px) {.sm\:mx-auto {
+}@media (min-width: 600px) {.sm\:mx-auto {
     margin-left: auto;
     margin-right: auto;
   }.sm\:w-full {
@@ -657,15 +657,21 @@ Ensure the default browser behavior of the `hidden` attribute.
     font-size: 1.125rem;
     line-height: 1.75rem;
   }
-}@media (min-width: 768px) {.md\:my-2 {
+}@media (min-width: 800px) {.md\:my-2 {
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
   }.md\:mt-14 {
     margin-top: 3.5rem;
   }.md\:mt-8 {
     margin-top: 2rem;
+  }.md\:ml-8 {
+    margin-left: 2rem;
+  }.md\:block {
+    display: block;
   }.md\:flex {
     display: flex;
+  }.md\:hidden {
+    display: none;
   }.md\:h-1\/6 {
     height: 16.666667%;
   }.md\:h-\[40rem\] {

@@ -20,7 +20,6 @@ exports.brand_list = async (req, res) => {
     // if (!brands) return "No brands in store currently." 
     res.render('brand_list', { title: 'All Brands', brand_list: brands })
   } catch (err) {
-    console.log(err)
     return res.status(404).send({ error: err.message })
   }
 }

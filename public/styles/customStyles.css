@@ -5,6 +5,11 @@
     height: 90vh;
 }
 
+.cart-item {
+    display: flex;
+    justify-content: space-evenly !important;
+}
+
 .body-class {
     position: relative;
     z-index: 0;
@@ -18,7 +23,8 @@
     z-index: 10;
 }
 .nav-center {
-    position: relative;
+    position: absolute;
+    left: 0;
 }
 .nav-right {
     position: absolute;
@@ -33,6 +39,12 @@
     margin: 0 2rem;
 }
 
+@media only screen and (max-width: 600px) {
+    .account {
+        margin: 0 1rem;
+    }
+  }
+
 .nav-list-logo {
     list-style: none;
     margin-right: auto;
@@ -45,6 +57,7 @@
     padding: 4px;
     cursor: pointer;
 }
+
 
 .nav-item-drop {
     position: absolute;

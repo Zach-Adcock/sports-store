@@ -13,45 +13,59 @@ html
   nav(class="nav h-20 text-lg sm:text-lg md:text-2xl flex justify-center items-center z-10 bg-slate-500")
     div(class="nav-center")
       ul(class="nav-list my-auto")
-        li(class="nav-list-item") Brands 
+        li(class="nav-list-item hidden md:block") Brands 
           i.fa.fa-caret-down
           ul(class="nav-item-drop")
             li 
               a(href='/shop/brands') View All Brands 
             li 
               a(href='/shop/brands/create') Create a Brand
-        li(class="nav-list-item") Products 
+        li(class="nav-list-item hidden md:block") Products 
           i.fa.fa-caret-down
           ul(class="nav-item-drop")
             li 
               a(href='/shop/products') View All Products 
             li 
               a(href='/shop/products/create') Create a Product
-        li(class="nav-list-item") Sports 
+        li(class="nav-list-item hidden md:block") Sports 
           i.fa.fa-caret-down
           ul(class="nav-item-drop") 
             li 
               a(href='/shop/sports') View All Sports 
             li 
               a(href='/shop/sports/create') Create a Sport   
+        li(class="nav-list-item md:hidden") Store 
+          i.fa.fa-caret-down
+          ul(class="nav-item-drop") 
+            li 
+              a(href='/shop/brands') View All Brands 
+            li 
+              a(href='/shop/brands/create') Create a Brand
+            li 
+              a(href='/shop/products') View All Products 
+            li 
+              a(href='/shop/products/create') Create a Product
+            li 
+              a(href='/shop/sports') View All Sports 
+            li 
+              a(href='/shop/sports/create') Create a Sport 
     div(class="nav-right flex items-center")
-      div(class="flex items-center gap-x-1")
+      a(class="flex items-center gap-x-1", href="/shoppingCart")
         i.fa.fa-cart-shopping 
         |  Cart
         if (session.cart)
           span(class="bg-cyan-400 text-sm font-medium mr-2 px-2.5 py-0.5 ml-1 rounded")= session.cart.itemCount
-          //- span(class="bg-cyan-400 text-sm font-medium mr-2 px-2.5 py-0.5 ml-1 rounded")=  session.cart ? session.cart.itemCount : 0
 
       if (login)
-        ul(class="nav-list my-auto")
+        ul(class="nav-list account my-auto")
           li(class="nav-list-item nav-list-drop-right") Account   
-            i(class="ml-10").fa.fa-caret-down
+            i(class="ml-4 md:ml-8").fa.fa-caret-down
             ul(class="nav-item-drop nav-item-drop-right")
               li 
                 a(href="/user/logout") Log Out
             
       else
-        ul(class="nav-list my-auto")
+        ul(class="nav-list account my-auto")
           li(class="nav-list-item nav-list-drop-right") Account 
             i(class="").fa.fa-caret-down
             ul(class="nav-item-drop nav-item-drop-right")
