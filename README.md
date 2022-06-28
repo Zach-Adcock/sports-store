@@ -2,7 +2,7 @@
 
 <h3>Demo GIF</h3>
 
-<img src="Assets/demo-gif-sports-store.gif" width="250" height="250" />
+<img src="Assets/demo-gif-sports-store.gif" width="full" height="auto" />
 
 
 
