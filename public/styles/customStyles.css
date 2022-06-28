@@ -92,11 +92,11 @@
     display: block;
 }
 
-.nav-item-drop > li:hover, .nav-item-drop > li:focus {
+.nav-item-drop > li:hover, .nav-item-drop > li:focus, .nav-item-drop > li:active {
     background-color: #22d3ee;
 }
 
-.nav-list-item:hover .nav-item-drop, .nav-list-item:focus .nav-item-drop {
+.nav-list-item:hover .nav-item-drop, .nav-list-item:focus .nav-item-drop, .nav-list-item:active .nav-item-drop {
     opacity: 1;
     visibility: visible;
 }

@@ -14,16 +14,16 @@ block content
     
 
     if (brand_products.length)
-      h4(class="text-2xl font-bold mt-8") Products in store
-        div(class="w-full md:w-3/5 md:h-96 flex flex-col items-center")
-          each product in brand_products
-            ul(class="flex justify-center")
-              div(class="w-full md:w-3/5 flex justify-center items-center mt-6")
-                a(class="max-h-4/5 w-7/12 flex justify-center", href=product.url)
-                  img(class="h-auto w-5/6 drop-shadow", src=product.image)
-                div(class="w-5/12 flex flex-col items-center")
-                  a(class="text-2xl text-center", href=product.url) #{product.name}
-                  div $!{product.price}
+      h4(class="text-2xl font-bold my-8") Products in store
+      div(class="w-full md:w-3/5 md:h-96 flex flex-col items-center")
+        each product in brand_products
+          ul(class="flex justify-center mb-8")
+            div(class="w-full md:w-3/5 flex justify-center items-center mt-6")
+              a(class="max-h-4/5 w-7/12 flex justify-center", href=product.url)
+                img(class="h-auto w-5/6 drop-shadow", src=product.image)
+              div(class="w-5/12 flex flex-col items-center")
+                a(class="text-2xl text-center", href=product.url) #{product.name}
+                div $!{product.price}
     else
       p(class="text-xl font-bold mt-8 text-center") This Brand has no products currently.
             
